@@ -34,9 +34,12 @@ public class UserMealsUtil {
         }
         List<UserMealWithExceed> result = new LinkedList<>();
         for(UserMeal meal: mealList){
-            boolean exceeded = dayMap.get(meal.getDateTime().getDayOfMonth()) > caloriesPerDay;
-            result.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(), exceeded));
+            if (meal.getDateTime().getHour() <= endTime.getHour() && meal.getDateTime().getHour() >= startTime.getHour()) {
+                boolean exceeded = dayMap.get(meal.getDateTime().getDayOfMonth()) > caloriesPerDay;
+                result.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(), exceeded));
+            }
         }
+        System.out.println(result);
         return result;
     }
 }
